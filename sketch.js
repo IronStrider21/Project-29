@@ -8,6 +8,7 @@ const Constraint = Matter.Constraint;
 var ground1;
 var box1;
 var stone1;
+var ball;
 
 
 function preload()
@@ -41,10 +42,11 @@ function setup() {
 	box14 = new Box(1025,300,50,50,);
 	box15 = new Box(1000,250,50,50,);
 
-	stone1 = new Stone(200,100,50,50);
+	//stone1 = new Stone(200,100,50,50);
+ball=Bodies.circle(50,200,20);
+World.add(world,ball);
 
-
-	Slingshot = new SlingShot(stone1.body,{x:200, y:100});
+	SlingShot = new SlingShot(this.ball,{x:200, y:100});
 
 	Engine.run(engine);
   
@@ -72,8 +74,11 @@ function draw() {
   box13.display();
   box14.display();
   box15.display();
-  Slingshot.display(); 
-stone1.display();
+  SlingShot.display(); 
+//stone1.display();
+strokeWeight(3);
+        fill(255,0,255)
+        ellipse(ball.position.x,ball.position.y,40,40);
 
   drawSprites();
  
@@ -82,7 +87,7 @@ stone1.display();
 
 function mouseDragged()
 {
-    Matter.Body.setPosition(stone1.body,{x:mouseX,y:mouseY})
+    Matter.Body.setPosition(this.ball,{x:mouseX,y:mouseY})
 }
 
 function mouseReleased()
@@ -93,6 +98,6 @@ function mouseReleased()
 
 function keyPressed(){
     if (keyCode === 32){
-       SlingShot.attach(paper1.body)
+       SlingShot.attach(this.ball)
     }
 }
